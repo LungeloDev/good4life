@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   imports: [],
   selector: 'app-onboarding-complete-page',
   templateUrl: './onboarding-complete-page.html',
+  styleUrl: './onboarding-complete-page.css',
 })
 export class OnboardingCompletePage {}

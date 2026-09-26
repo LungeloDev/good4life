@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   imports: [],
   selector: 'app-loading-state',
   templateUrl: './loading-state.html',
+  styleUrl: './loading-state.css',
 })
 export class LoadingState {}

@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   imports: [],
   selector: 'app-progress-card',
   templateUrl: './progress-card.html',
+  styleUrl: './progress-card.css',
 })
 export class ProgressCard {}

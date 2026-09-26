@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   imports: [],
   selector: 'app-profile-step',
   templateUrl: './profile-step.html',
+  styleUrl: './profile-step.css',
 })
 export class ProfileStep {}

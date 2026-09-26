@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   imports: [],
   selector: 'app-app-shell',
   templateUrl: './app-shell.html',
+  styleUrl: './app-shell.css',
 })
 export class AppShell {}

@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   imports: [],
   selector: 'app-debt-card',
   templateUrl: './debt-card.html',
+  styleUrl: './debt-card.css',
 })
 export class DebtCard {}
