@@ -1,1 +1,46 @@
-<p>consent-step works!</p>
+<app-public-header [showAction]="false" />
+
+<main class="onboarding-page">
+    <app-step-indicator [currentStep]="1" />
+
+    <section class="card">
+        <span class="eyebrow">STEP 1 OF 4</span>
+        <h1>Before we begin</h1>
+
+        <p class="intro">
+            This demo uses the information you enter to build your overview
+            and an illustrative repayment plan.
+        </p>
+
+        <div class="info-box">
+            <h2>About this demo</h2>
+            <p>
+                Use sample details. Information is held in memory for this session
+                and resets when you refresh. This flow does not retrieve a credit
+                report, contact creditors or make payments.
+            </p>
+        </div>
+
+        <form (ngSubmit)="continue()">
+            <label class="check-row">
+                <input name="accepted" type="checkbox" [(ngModel)]="accepted" required />
+
+                <span>
+                    I understand how this demo uses the information I enter
+                    and want to continue.
+                </span>
+            </label>
+
+            <div class="actions">
+                <a class="button button--secondary" routerLink="/onboarding/welcome">
+                    Back
+                </a>
+
+                <button class="button button--primary" type="submit" [disabled]="!accepted">
+                    Continue
+                    <span aria-hidden="true">→</span>
+                </button>
+            </div>
+        </form>
+    </section>
+</main>

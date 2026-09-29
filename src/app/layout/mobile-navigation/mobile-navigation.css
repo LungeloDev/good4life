@@ -1,0 +1,48 @@
+:host {
+    display: block;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.mobile-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 10px 14px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    border-top: 1px solid #ece5dd;
+    background: white;
+    box-shadow: 0 -5px 25px rgba(70, 45, 25, 0.04);
+}
+
+a {
+    display: flex;
+    min-height: 52px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border-radius: 10px;
+    color: #95877b;
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 750;
+}
+
+.icon {
+    font-size: 22px;
+    line-height: 1;
+}
+
+a.active {
+    background: #fff0e5;
+    color: #c94e17;
+}
+
+a:focus-visible {
+    outline: 3px solid #ed6a24;
+    outline-offset: 2px;
+}

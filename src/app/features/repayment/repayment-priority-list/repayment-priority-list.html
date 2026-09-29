@@ -1,1 +1,119 @@
-<p>repayment-priority-list works!</p>
+<section class="priority-card" aria-label="Repayment priority">
+    <header class="priority-header">
+        <div>
+            <span class="eyebrow">REPAYMENT STRATEGY</span>
+            <h2>{{ title() }}</h2>
+            <p>{{ subtitle() }}</p>
+        </div>
+
+        <div class="strategy-badge">
+            <span class="strategy-dot"></span>
+            Smallest first
+        </div>
+    </header>
+
+    @if (items().length > 0) {
+
+    <div class="priority-list">
+
+        @for (item of items(); track item.id) {
+
+        <article class="priority-item" [class.priority-item--next]="item.status === 'next'"
+            [class.priority-item--completed]="item.status === 'completed'">
+
+            <div class="rank">
+                @if (item.status === 'completed') {
+                ✓
+                } @else {
+                {{ item.rank }}
+                }
+            </div>
+
+            <div class="priority-main">
+
+                <div class="priority-title">
+                    <div>
+                        <span class="creditor">{{ item.creditor }}</span>
+                        <h3>{{ item.name }}</h3>
+                    </div>
+
+                    @if (item.status === 'next') {
+                    <span class="target-badge">
+                        NEXT TARGET
+                    </span>
+                    }
+
+                    @if (item.status === 'completed') {
+                    <span class="completed-badge">
+                        CLEARED
+                    </span>
+                    }
+                </div>
+
+                <div class="priority-details">
+
+                    <div>
+                        <span>Balance</span>
+                        <strong>
+                            {{ item.balance | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Monthly payment</span>
+                        <strong>
+                            {{ item.monthlyPayment | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Estimated time</span>
+                        <strong>
+                            {{ item.estimatedMonths }} months
+                        </strong>
+                    </div>
+
+                </div>
+
+                @if (item.reason) {
+                <div class="priority-reason">
+                    <span>Why this debt?</span>
+                    <p>{{ item.reason }}</p>
+                </div>
+                }
+
+            </div>
+
+            <div class="priority-arrow">
+                →
+            </div>
+
+        </article>
+
+        }
+
+    </div>
+
+    } @else {
+
+    <div class="empty-state">
+        <div class="empty-icon">◎</div>
+
+        <h3>Your repayment order will appear here</h3>
+
+        <p>
+            Add your debts and we'll help organise them into a
+            clear repayment journey.
+        </p>
+    </div>
+
+    }
+
+    <footer class="priority-footer">
+        <span>
+            Your plan can change when payments, savings or additional
+            cash become available.
+        </span>
+    </footer>
+
+</section>

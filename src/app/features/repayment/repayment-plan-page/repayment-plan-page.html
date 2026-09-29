@@ -1,1 +1,82 @@
-<p>repayment-plan-page works!</p>
+<app-page-header eyebrow="YOUR NEXT MILESTONE" title="My Repayment Plan"
+    description="Explore an illustrative plan using your entered balances and monthly payments.">
+    <a class="button" routerLink="/debts">
+        Update my debts
+        <span aria-hidden="true">→</span>
+    </a>
+</app-page-header>
+
+<div class="plan-page">
+    @if (store.orderedDebts().length > 0) {
+    <section class="plan-summary" aria-label="Projection summary">
+        <article>
+            <span>Balances included</span>
+            <strong>
+                {{ store.totalBalance() | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+            </strong>
+        </article>
+
+        <article>
+            <span>Monthly budget entered</span>
+            <strong>
+                {{ store.monthlyPayments() | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+            </strong>
+        </article>
+
+        <article>
+            <span>Balance-only projection</span>
+
+            @if (store.monthlyPayments() <= 0) { <strong class="text-value">Enter a payment</strong>
+                } @else if (projectedMonths(); as months) {
+                <strong>{{ months }} months</strong>
+                } @else {
+                <strong class="text-value">Beyond {{ horizon }} months</strong>
+                }
+        </article>
+    </section>
+
+    <div class="assumptions">
+        <span class="assumption-icon" aria-hidden="true">i</span>
+
+        <p>
+            Illustration only: interest and fees are excluded. The combined
+            monthly budget stays constant, with freed amounts directed to the
+            smallest remaining balance. Timeline payments and remaining balances
+            cover all included debts. No projected payments are recorded as paid.
+        </p>
+    </div>
+
+    <app-repayment-priority-list [items]="priorityItems()" title="Your repayment priority"
+        subtitle="Smallest balance first, based on the debts you entered." />
+
+    @if (store.monthlyPayments() > 0) {
+    <app-repayment-timeline [timeline]="firstYear()" title="Your projected first 12 months" />
+
+    @if (timeline().length > 12) {
+    <p class="projection-note">
+        Showing the first 12 of {{ timeline().length }} projected months.
+    </p>
+    }
+
+    @if (!projection().complete) {
+    <p class="projection-note">
+        A balance remains at the end of the {{ horizon }}-month projection.
+    </p>
+    }
+    } @else {
+    <app-empty-state title="Add a monthly payment to build your timeline"
+        description="Update your debt entries with the amounts you plan to pay each month." />
+
+    <div class="empty-action">
+        <a class="button" routerLink="/debts">Update my payments</a>
+    </div>
+    }
+    } @else {
+    <app-empty-state title="No outstanding balances to project"
+        description="Add a debt with a positive balance to build a repayment illustration." />
+
+    <div class="empty-action">
+        <a class="button" routerLink="/debts">Go to My Debts</a>
+    </div>
+    }
+</div>

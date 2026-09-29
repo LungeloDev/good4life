@@ -1,1 +1,21 @@
-<p>confirmation-dialog works!</p>
+<dialog #dialog aria-labelledby="confirmation-title" aria-describedby="confirmation-message" (cancel)="cancel($event)">
+    <div class="dialog-content">
+        <div class="dialog-icon" [class.dialog-icon--danger]="destructive()" aria-hidden="true">
+            {{ destructive() ? '!' : '?' }}
+        </div>
+
+        <h2 id="confirmation-title">{{ title() }}</h2>
+        <p id="confirmation-message">{{ message() }}</p>
+
+        <div class="dialog-actions">
+            <button autofocus class="cancel-button" type="button" (click)="cancel()">
+                {{ cancelLabel() }}
+            </button>
+
+            <button class="confirm-button" [class.confirm-button--danger]="destructive()" type="button"
+                (click)="confirmed.emit()">
+                {{ confirmLabel() }}
+            </button>
+        </div>
+    </div>
+</dialog>

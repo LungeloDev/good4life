@@ -1,0 +1,167 @@
+:host {
+    display: block;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.target-card {
+    overflow: hidden;
+    border: 1px solid #ece5dd;
+    border-radius: 15px;
+    background: white;
+    color: #29231e;
+}
+
+header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 23px 24px 0;
+}
+
+.eyebrow {
+    color: #c94e17;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+}
+
+h2 {
+    margin: 8px 0 0;
+    font-size: 20px;
+    letter-spacing: -0.04em;
+}
+
+.badge {
+    padding: 7px 10px;
+    border-radius: 20px;
+    background: #fff0e5;
+    color: #c94e17;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.target-body {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding: 27px 24px;
+}
+
+.target-number {
+    display: grid;
+    width: 53px;
+    height: 53px;
+    flex: none;
+    place-items: center;
+    border-radius: 14px;
+    background: #fff0e5;
+    color: #c94e17;
+    font-size: 18px;
+    font-weight: 850;
+}
+
+.target-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.target-copy small {
+    color: #9c8b7f;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.target-copy h3 {
+    margin: 6px 0;
+    font-size: 19px;
+}
+
+.target-copy p {
+    max-width: 320px;
+    margin: 0;
+    color: #81776e;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.target-balance {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: right;
+}
+
+.target-balance small,
+.target-balance span {
+    color: #978b80;
+    font-size: 10px;
+}
+
+.target-balance strong {
+    font-size: 22px;
+    white-space: nowrap;
+}
+
+.empty-target {
+    padding: 30px 24px;
+}
+
+.empty-target p {
+    color: #81776e;
+    font-size: 12px;
+}
+
+.empty-target a {
+    color: #c94e17;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px 24px;
+    border-top: 1px solid #f1eae4;
+    background: #fffdfa;
+}
+
+footer span {
+    color: #95897e;
+    font-size: 10px;
+}
+
+footer a {
+    color: #c94e17;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+@media (max-width: 650px) {
+    .target-body {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .target-balance {
+        width: 100%;
+        padding-left: 70px;
+        text-align: left;
+    }
+
+    footer {
+        flex-direction: column;
+    }
+}

@@ -1,1 +1,45 @@
-<p>welcome-page works!</p>
+<app-public-header [showAction]="false" />
+
+<main class="onboarding-page">
+    <section class="card">
+        <div class="hero-icon" aria-hidden="true">G</div>
+
+        <span class="eyebrow">WELCOME TO GOOD4LIFE</span>
+        <h1>Your next chapter starts with clarity.</h1>
+
+        <p class="intro">
+            Bring your financial information together and take the first step
+            towards a clearer repayment journey.
+        </p>
+
+        <ul class="feature-list">
+            <li>
+                <span aria-hidden="true">✓</span>
+                Tell us a little about yourself.
+            </li>
+            <li>
+                <span aria-hidden="true">✓</span>
+                Enter your income and everyday expenses.
+            </li>
+            <li>
+                <span aria-hidden="true">✓</span>
+                Add your debts and explore a repayment illustration.
+            </li>
+        </ul>
+
+        <div class="actions">
+            <a class="button button--secondary" routerLink="/">
+                Back to home
+            </a>
+
+            <a class="button button--primary" routerLink="/onboarding/consent">
+                Let’s get started
+                <span aria-hidden="true">→</span>
+            </a>
+        </div>
+    </section>
+
+    <p class="demo-note">
+        Demo journey. Please use sample information.
+    </p>
+</main>

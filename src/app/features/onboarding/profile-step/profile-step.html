@@ -1,1 +1,58 @@
-<p>profile-step works!</p>
+<app-public-header [showAction]="false" />
+
+<main class="onboarding-page">
+    <app-step-indicator [currentStep]="2" />
+
+    <section class="card">
+        <span class="eyebrow">STEP 2 OF 4</span>
+        <h1>Let’s get to know you</h1>
+
+        <p class="intro">
+            Add sample profile details to personalise your demo journey.
+        </p>
+
+        <form #profileForm="ngForm" (ngSubmit)="continue(profileForm)">
+            <div class="form-grid">
+                <label class="field field--wide">
+                    <span>Full name</span>
+
+                    <input #fullName="ngModel" name="fullName" type="text" [(ngModel)]="draft.fullName"
+                        placeholder="Your full name" autocomplete="name" maxlength="120" pattern=".*\S.*" required />
+
+                    @if (fullName.invalid && fullName.touched) {
+                    <span class="field-error">Enter your full name.</span>
+                    }
+                </label>
+
+                <label class="field field--wide">
+                    <span>Email address</span>
+
+                    <input #email="ngModel" name="email" type="email" [(ngModel)]="draft.email"
+                        placeholder="name@example.com" autocomplete="email" email required />
+
+                    @if (email.invalid && email.touched) {
+                    <span class="field-error">Enter a valid email address.</span>
+                    }
+                </label>
+
+                <label class="field field--wide">
+                    <span>Phone number — optional</span>
+
+                    <input name="phone" type="tel" [(ngModel)]="draft.phone" placeholder="For example, 082 123 4567"
+                        autocomplete="tel" maxlength="30" />
+                </label>
+            </div>
+
+            <div class="actions">
+                <a class="button button--secondary" routerLink="/onboarding/consent">
+                    Back
+                </a>
+
+                <button class="button button--primary" type="submit" [disabled]="profileForm.invalid">
+                    Continue
+                    <span aria-hidden="true">→</span>
+                </button>
+            </div>
+        </form>
+    </section>
+</main>

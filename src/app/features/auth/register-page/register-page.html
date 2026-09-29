@@ -1,1 +1,237 @@
-<p>register-page works!</p>
+<a class="skip-link" href="#register-form">Skip to registration</a>
+
+<div class="login-page register-page">
+    <section class="story-panel" aria-label="About GooD4Life">
+        <div class="story-panel__glow" aria-hidden="true"></div>
+
+        <a class="brand brand--light" routerLink="/" aria-label="GooD4Life home">
+            <span class="brand-mark" aria-hidden="true">✳</span>
+            <span class="brand-name">
+                GooD<span>4</span>Life
+                <small>by ThuthukaSA</small>
+            </span>
+        </a>
+
+        <div class="story-content">
+            <span class="story-eyebrow">
+                <span aria-hidden="true">✳</span>
+                BEGIN YOUR JOURNEY
+            </span>
+
+            <h1>
+                Start where you are.<br />
+                <span>Move forward from there.</span>
+            </h1>
+
+            <p>
+                You do not need to have every answer today. Begin by understanding
+                your position, then take one practical step at a time.
+            </p>
+
+            <div class="story-preview" aria-hidden="true">
+                <div class="story-preview__top">
+                    <span class="preview-icon">✳</span>
+                    <span>Your journey</span>
+                </div>
+
+                <strong>A clearer way forward</strong>
+
+                <div class="journey-steps">
+                    <div>
+                        <span class="journey-steps__number">1</span>
+                        <span>Understand</span>
+                    </div>
+                    <div>
+                        <span class="journey-steps__number">2</span>
+                        <span>Plan</span>
+                    </div>
+                    <div>
+                        <span class="journey-steps__number">3</span>
+                        <span>Progress</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="story-footer">
+            <span>GooD4Life by ThuthukaSA</span>
+            <span>One step at a time.</span>
+        </div>
+    </section>
+
+    <main class="form-panel">
+        <div class="mobile-brand">
+            <a class="brand" routerLink="/" aria-label="GooD4Life home">
+                <span class="brand-mark" aria-hidden="true">✳</span>
+                <span class="brand-name">
+                    GooD<span>4</span>Life
+                    <small>by ThuthukaSA</small>
+                </span>
+            </a>
+        </div>
+
+        <div class="form-panel__top">
+            <a class="back-link" routerLink="/">
+                <span aria-hidden="true">←</span>
+                Back to home
+            </a>
+        </div>
+
+        <div class="form-container">
+            <div class="form-heading">
+                <span class="section-label">GET STARTED</span>
+                <h2>Create your account.</h2>
+                <p>Take the first step towards a clearer view of your finances.</p>
+            </div>
+
+            <form id="register-form" class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+                <div class="name-grid">
+                    <div class="field">
+                        <label for="firstName">First name</label>
+                        <input id="firstName" type="text" formControlName="firstName" placeholder="First name"
+                            autocomplete="given-name" [attr.aria-invalid]="
+                form.controls.firstName.invalid &&
+                form.controls.firstName.touched
+              " />
+
+                        @if (
+                        form.controls.firstName.touched &&
+                        form.controls.firstName.invalid
+                        ) {
+                        <span class="field-error">Enter your first name.</span>
+                        }
+                    </div>
+
+                    <div class="field">
+                        <label for="lastName">Last name</label>
+                        <input id="lastName" type="text" formControlName="lastName" placeholder="Last name"
+                            autocomplete="family-name" [attr.aria-invalid]="
+                form.controls.lastName.invalid &&
+                form.controls.lastName.touched
+              " />
+
+                        @if (
+                        form.controls.lastName.touched &&
+                        form.controls.lastName.invalid
+                        ) {
+                        <span class="field-error">Enter your last name.</span>
+                        }
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="email">Email address</label>
+                    <input id="email" type="email" formControlName="email" placeholder="you@example.com"
+                        autocomplete="email" [attr.aria-invalid]="
+              form.controls.email.invalid && form.controls.email.touched
+            " />
+
+                    @if (form.controls.email.touched && form.controls.email.invalid) {
+                    <span class="field-error">
+                        @if (form.controls.email.hasError('required')) {
+                        Enter your email address.
+                        } @else {
+                        Enter a valid email address.
+                        }
+                    </span>
+                    }
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+
+                    <div class="password-field">
+                        <input id="password" [type]="showPassword() ? 'text' : 'password'" formControlName="password"
+                            placeholder="Create a password" autocomplete="new-password" [attr.aria-invalid]="
+                form.controls.password.invalid &&
+                form.controls.password.touched
+              " />
+
+                        <button class="password-toggle" type="button" [attr.aria-label]="
+                showPassword() ? 'Hide password' : 'Show password'
+              " [attr.aria-pressed]="showPassword()" (click)="togglePassword()">
+                            {{ showPassword() ? 'Hide' : 'Show' }}
+                        </button>
+                    </div>
+
+                    @if (
+                    form.controls.password.touched &&
+                    form.controls.password.invalid
+                    ) {
+                    <span class="field-error">
+                        @if (form.controls.password.hasError('required')) {
+                        Create a password.
+                        } @else {
+                        Use at least 8 characters.
+                        }
+                    </span>
+                    } @else {
+                    <span class="field-hint">Use at least 8 characters.</span>
+                    }
+                </div>
+
+                <div class="field">
+                    <label for="confirmPassword">Confirm password</label>
+
+                    <div class="password-field">
+                        <input id="confirmPassword" [type]="showConfirmPassword() ? 'text' : 'password'"
+                            formControlName="confirmPassword" placeholder="Enter your password again"
+                            autocomplete="new-password" [attr.aria-invalid]="
+                form.controls.confirmPassword.touched &&
+                (
+                  form.controls.confirmPassword.invalid ||
+                  form.hasError('passwordMismatch')
+                )
+              " />
+
+                        <button class="password-toggle" type="button" [attr.aria-label]="
+                showConfirmPassword()
+                  ? 'Hide confirmation password'
+                  : 'Show confirmation password'
+              " [attr.aria-pressed]="showConfirmPassword()" (click)="toggleConfirmPassword()">
+                            {{ showConfirmPassword() ? 'Hide' : 'Show' }}
+                        </button>
+                    </div>
+
+                    @if (
+                    form.controls.confirmPassword.touched &&
+                    form.controls.confirmPassword.hasError('required')
+                    ) {
+                    <span class="field-error">Confirm your password.</span>
+                    } @else if (
+                    form.controls.confirmPassword.touched &&
+                    form.hasError('passwordMismatch')
+                    ) {
+                    <span class="field-error">Passwords do not match.</span>
+                    }
+                </div>
+
+                @if (showAuthNotice()) {
+                <div class="notice" role="status">
+                    Account creation is being connected. You can explore the demo
+                    experience below.
+                </div>
+                }
+
+                <button class="submit-button" type="submit">
+                    Create account
+                    <span aria-hidden="true">↗</span>
+                </button>
+            </form>
+
+            <div class="divider"><span>or</span></div>
+
+            <a class="demo-button" routerLink="/onboarding/welcome">
+                Explore the demo
+                <span aria-hidden="true">→</span>
+            </a>
+
+            <p class="register-prompt">
+                Already have an account?
+                <a routerLink="/login">Sign in</a>
+            </p>
+        </div>
+
+        <p class="form-footer">© 2026 ThuthukaSA · GooD4Life</p>
+    </main>
+</div>

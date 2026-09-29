@@ -1,0 +1,105 @@
+:host {
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+dialog {
+    width: min(440px, calc(100vw - 32px));
+    max-height: calc(100dvh - 40px);
+    overflow: auto;
+    padding: 0;
+    border: 1px solid #ece5dd;
+    border-radius: 17px;
+    background: white;
+    color: #29231e;
+    box-shadow: 0 25px 90px rgba(40, 25, 15, 0.2);
+}
+
+dialog::backdrop {
+    background: rgba(35, 26, 20, 0.45);
+}
+
+.dialog-content {
+    padding: 28px;
+}
+
+.dialog-icon {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border-radius: 13px;
+    background: #fff0e5;
+    color: #c94e17;
+    font-size: 23px;
+    font-weight: 850;
+}
+
+.dialog-icon--danger {
+    background: #fcebea;
+    color: #bd4942;
+}
+
+h2 {
+    margin: 19px 0 10px;
+    font-size: 22px;
+    letter-spacing: -0.04em;
+}
+
+p {
+    margin: 0;
+    color: #81776e;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 27px;
+}
+
+button {
+    min-height: 43px;
+    padding: 11px 18px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.cancel-button {
+    border-color: #e8dfd7;
+    background: white;
+    color: #71655a;
+}
+
+.confirm-button {
+    background: #ed6a24;
+    color: white;
+}
+
+.confirm-button--danger {
+    background: #bd4942;
+}
+
+button:focus-visible {
+    outline: 3px solid #ed6a24;
+    outline-offset: 3px;
+}
+
+@media (max-width: 450px) {
+    .dialog-content {
+        padding: 23px;
+    }
+
+    .dialog-actions button {
+        flex: 1;
+    }
+}

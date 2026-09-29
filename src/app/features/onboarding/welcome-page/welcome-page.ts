@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { PublicHeader } from '../../../layout/public-header/public-header';
 
 @Component({
-  imports: [],
   selector: 'app-welcome-page',
+  standalone: true,
+  imports: [RouterLink, PublicHeader],
   templateUrl: './welcome-page.html',
-  styleUrl: './welcome-page.css',
+  styleUrl: '../onboarding.css',
 })
-export class WelcomePage {}
+export class WelcomePage { }

@@ -1,1 +1,13 @@
-<p>app-shell works!</p>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<div class="app-shell">
+    <app-app-sidebar />
+
+    <main id="main-content" class="main-content" tabindex="-1">
+        <div class="page-container">
+            <router-outlet />
+        </div>
+    </main>
+
+    <app-mobile-navigation />
+</div>

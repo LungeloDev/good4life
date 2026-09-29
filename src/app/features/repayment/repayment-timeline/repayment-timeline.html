@@ -1,1 +1,148 @@
-<p>repayment-timeline works!</p>
+<section class="timeline-card" aria-label="Repayment timeline">
+
+    <header class="timeline-header">
+
+        <div>
+            <span class="eyebrow">YOUR JOURNEY</span>
+            <h2>{{ title() }}</h2>
+            <p>
+                See how your target debt can move down over time.
+            </p>
+        </div>
+
+        <div class="timeline-summary">
+            <span>PLAN</span>
+            <strong>MONTH BY MONTH</strong>
+        </div>
+
+    </header>
+
+    @if (timeline().length > 0) {
+
+    <div class="timeline">
+
+        @for (item of timeline(); track item.month + item.debtName) {
+
+        <article class="timeline-item" [class.timeline-item--current]="item.status === 'current'"
+            [class.timeline-item--completed]="item.status === 'completed'">
+
+            <div class="timeline-marker">
+
+                @if (item.status === 'completed') {
+                ✓
+                } @else {
+                <span></span>
+                }
+
+            </div>
+
+            <div class="timeline-content">
+
+                <div class="timeline-top">
+
+                    <div>
+                        <span class="timeline-month">
+                            {{ item.month }}
+                        </span>
+
+                        <h3>
+                            {{ item.debtName }}
+                        </h3>
+                    </div>
+
+                    @if (item.status === 'current') {
+                    <span class="current-badge">
+                        THIS MONTH
+                    </span>
+                    }
+
+                    @if (item.status === 'completed') {
+                    <span class="cleared-badge">
+                        CLEARED
+                    </span>
+                    }
+
+                </div>
+
+                <div class="timeline-numbers">
+
+                    <div>
+                        <span>Payment</span>
+                        <strong>
+                            {{ item.payment | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Remaining</span>
+                        <strong>
+                            {{ item.remainingBalance | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+                        </strong>
+                    </div>
+
+                    <div class="progress-column">
+                        <div class="progress-label">
+                            <span>Progress</span>
+                            <strong>{{ item.progress }}%</strong>
+                        </div>
+
+                        <div class="progress-track">
+                            <span [style.width.%]="item.progress"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        }
+
+    </div>
+
+    } @else {
+
+    <div class="empty-timeline">
+
+        <div class="empty-timeline-icon">
+            →
+        </div>
+
+        <h3>Your timeline will build as you add your debts</h3>
+
+        <p>
+            Once your debt information is available, your repayment
+            journey will be shown here month by month.
+        </p>
+
+    </div>
+
+    }
+
+    <footer class="timeline-footer">
+
+        <div class="legend">
+            <span>
+                <i class="legend-dot legend-dot--current"></i>
+                Current
+            </span>
+
+            <span>
+                <i class="legend-dot legend-dot--upcoming"></i>
+                Upcoming
+            </span>
+
+            <span>
+                <i class="legend-dot legend-dot--complete"></i>
+                Cleared
+            </span>
+        </div>
+
+        <p>
+            Estimates change when payments or additional amounts are recorded.
+        </p>
+
+    </footer>
+
+</section>

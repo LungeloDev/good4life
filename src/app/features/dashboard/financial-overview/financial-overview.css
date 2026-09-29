@@ -1,0 +1,95 @@
+:host {
+    display: block;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.overview {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 15px;
+}
+
+.metric {
+    position: relative;
+    display: flex;
+    min-height: 168px;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 23px;
+    border: 1px solid #ece5dd;
+    border-radius: 15px;
+    background: white;
+    color: #29231e;
+}
+
+.metric>span {
+    color: #766c63;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.metric strong {
+    position: relative;
+    z-index: 1;
+    margin-top: 22px;
+    font-size: clamp(27px, 2.7vw, 35px);
+    font-weight: 850;
+    letter-spacing: -0.06em;
+}
+
+.metric small {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    color: #998e84;
+    font-size: 11px;
+}
+
+.metric--primary {
+    border-color: transparent;
+    background: linear-gradient(125deg, #e65d1e, #f18b3d);
+    color: white;
+}
+
+.metric--primary>span,
+.metric--primary small {
+    color: #fff0e6;
+}
+
+.metric__circle {
+    position: absolute;
+    right: -80px;
+    bottom: -160px;
+    width: 310px;
+    height: 310px;
+    border: 48px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+@media (max-width: 850px) {
+    .overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .metric--primary {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 600px) {
+    .overview {
+        grid-template-columns: 1fr;
+    }
+
+    .metric--primary {
+        grid-column: auto;
+    }
+
+    .metric {
+        min-height: 145px;
+    }
+}

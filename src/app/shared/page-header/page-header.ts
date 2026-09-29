@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
-  imports: [],
   selector: 'app-page-header',
+  standalone: true,
   templateUrl: './page-header.html',
   styleUrl: './page-header.css',
 })
-export class PageHeader {}
+export class PageHeader {
+  readonly eyebrow = input('');
+  readonly title = input.required<string>();
+  readonly description = input('');
+}

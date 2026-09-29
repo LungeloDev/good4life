@@ -1,0 +1,121 @@
+:host {
+    display: block;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+.debt-card {
+    padding: 20px;
+    border: 1px solid #ece5dd;
+    border-radius: 14px;
+    background: white;
+    color: #29231e;
+}
+
+.debt-card__top {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+}
+
+.debt-icon {
+    display: grid;
+    width: 37px;
+    height: 37px;
+    flex: none;
+    place-items: center;
+    border-radius: 10px;
+    background: #fff0e5;
+    color: #ed6a24;
+    font-size: 20px;
+}
+
+.debt-title h3 {
+    margin: 2px 0 7px;
+    font-size: 15px;
+}
+
+.priority-badge {
+    display: inline-block;
+    padding: 5px 8px;
+    border-radius: 15px;
+    background: #fff0e5;
+    color: #c94e17;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.amount {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 28px;
+}
+
+.amount small {
+    color: #978b80;
+    font-size: 10px;
+}
+
+.amount strong {
+    font-size: 25px;
+    letter-spacing: -0.05em;
+}
+
+.monthly {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 23px;
+    padding-top: 15px;
+    border-top: 1px solid #eee7df;
+    font-size: 11px;
+}
+
+.monthly span {
+    color: #81776e;
+}
+
+.monthly strong {
+    white-space: nowrap;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.actions button {
+    flex: 1;
+    min-height: 35px;
+    border: 1px solid #e8dfd7;
+    border-radius: 7px;
+    background: white;
+    color: #62584f;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.actions button:hover {
+    border-color: #ed6a24;
+    color: #c94e17;
+}
+
+.actions .remove-button:hover {
+    border-color: #bd4942;
+    color: #bd4942;
+}
+
+button:focus-visible {
+    outline: 3px solid #ed6a24;
+    outline-offset: 2px;
+}

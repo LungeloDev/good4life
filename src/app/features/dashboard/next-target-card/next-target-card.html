@@ -1,1 +1,45 @@
-<p>next-target-card works!</p>
+<article class="target-card">
+    <header>
+        <div>
+            <span class="eyebrow">A PLACE TO START</span>
+            <h2>Suggested first target</h2>
+        </div>
+        <span class="badge">Smallest balance</span>
+    </header>
+
+    @if (debt(); as target) {
+    <div class="target-body">
+        <span class="target-number" aria-hidden="true">01</span>
+
+        <div class="target-copy">
+            <small>FOCUS DEBT</small>
+            <h3>{{ target.name }}</h3>
+            <p>
+                This is the smallest balance entered. It offers a clear
+                first milestone in the sample plan.
+            </p>
+        </div>
+
+        <div class="target-balance">
+            <small>Current balance</small>
+            <strong>
+                {{ target.balance | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+            </strong>
+            <span>
+                {{ target.monthlyPayment | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+                entered monthly
+            </span>
+        </div>
+    </div>
+    } @else {
+    <div class="empty-target">
+        <p>Add a debt to see a suggested first target.</p>
+        <a routerLink="/debts">Go to My Debts →</a>
+    </div>
+    }
+
+    <footer>
+        <span>Based on balance size, not interest or fees.</span>
+        <a routerLink="/repayment-plan">View the plan →</a>
+    </footer>
+</article>

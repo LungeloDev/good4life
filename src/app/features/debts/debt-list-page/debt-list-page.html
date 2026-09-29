@@ -1,1 +1,99 @@
-<p>debt-list-page works!</p>
+<app-page-header eyebrow="YOUR BALANCES" title="My Debts"
+    description="Bring your debts into one view and keep your entered balances up to date.">
+    <button class="button button--primary" type="button" (click)="openAdd()">
+        <span aria-hidden="true">+</span>
+        Add a debt
+    </button>
+</app-page-header>
+
+<div class="debt-page">
+    <app-debt-summary [debts]="store.debts()" />
+
+    <p class="announcement" role="status" aria-live="polite">
+        {{ announcement() }}
+    </p>
+
+    @if (formOpen()) {
+    <section class="form-card" aria-labelledby="debt-form-title">
+        <div class="form-heading">
+            <div>
+                <span class="eyebrow">DEBT DETAILS</span>
+                <h2 id="debt-form-title">
+                    {{ editingId() ? 'Edit your debt' : 'Add a debt' }}
+                </h2>
+            </div>
+
+            <button class="close-button" type="button" aria-label="Close debt form" (click)="closeForm()">
+                ×
+            </button>
+        </div>
+
+        <form #debtForm="ngForm" (ngSubmit)="saveDebt()">
+            <div class="form-grid">
+                <label class="field field--wide">
+                    <span>Debt name</span>
+                    <input name="name" type="text" [(ngModel)]="draft.name" placeholder="For example, credit card"
+                        maxlength="120" required />
+                </label>
+
+                <label class="field">
+                    <span>Current balance (R)</span>
+                    <input name="balance" type="number" [(ngModel)]="draft.balance" placeholder="0.00" min="0"
+                        step="0.01" required />
+                </label>
+
+                <label class="field">
+                    <span>Monthly payment (R)</span>
+                    <input name="monthlyPayment" type="number" [(ngModel)]="draft.monthlyPayment" placeholder="0.00"
+                        min="0" step="0.01" required />
+                </label>
+            </div>
+
+            <p class="form-hint">
+                Entering a balance does not record a payment or contact the creditor.
+            </p>
+
+            @if (formError()) {
+            <p class="form-error" role="alert">{{ formError() }}</p>
+            }
+
+            <div class="form-actions">
+                <button class="button button--secondary" type="button" (click)="closeForm()">
+                    Cancel
+                </button>
+
+                <button class="button button--primary" type="submit" [disabled]="debtForm.invalid">
+                    {{ editingId() ? 'Save changes' : 'Add debt' }}
+                </button>
+            </div>
+        </form>
+    </section>
+    }
+
+    @if (store.debts().length > 0) {
+    <div class="list-heading">
+        <h2>Your accounts</h2>
+        <span>{{ store.debts().length }} debts entered</span>
+    </div>
+
+    <div class="debt-grid">
+        @for (debt of store.debts(); track debt.id) {
+        <app-debt-card [debt]="debt" [priority]="debt.id === store.nextTarget()?.id" (edit)="openEdit($event)"
+            (remove)="pendingRemoval.set($event)" />
+        }
+    </div>
+    } @else {
+    <app-empty-state title="No debts entered yet" description="Add your first debt to build your overview."
+        actionLabel="Add my first debt" (action)="openAdd()" />
+    }
+
+    <p class="demo-note">
+        Demo data is kept for this session only and resets on refresh.
+    </p>
+</div>
+
+<app-confirmation-dialog [open]="pendingRemoval() !== null" title="Remove this debt?" [message]="
+    'Remove ' + (pendingRemoval()?.name ?? 'this debt') +
+    ' from your overview? This does not settle the debt with the creditor.'
+  " confirmLabel="Remove debt" [destructive]="true" (cancelled)="pendingRemoval.set(null)"
+    (confirmed)="confirmRemoval()" />

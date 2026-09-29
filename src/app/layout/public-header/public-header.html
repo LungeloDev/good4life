@@ -1,1 +1,15 @@
-<p>public-header works!</p>
+<header class="public-header">
+    <div class="header-inner">
+        <a class="brand" routerLink="/" aria-label="GooD4Life home">
+            <span class="brand-mark" aria-hidden="true">G</span>
+            <strong>GooD4Life</strong>
+        </a>
+
+        @if (showAction()) {
+        <a class="start-button" [routerLink]="actionRoute()">
+            {{ actionLabel() }}
+            <span aria-hidden="true">→</span>
+        </a>
+        }
+    </div>
+</header>

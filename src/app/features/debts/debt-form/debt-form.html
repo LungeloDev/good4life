@@ -1,1 +1,85 @@
-<p>debt-form works!</p>
+<form class="debt-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="form-heading">
+        <div class="heading-icon" aria-hidden="true">+</div>
+        <div>
+            <h2>Add a debt</h2>
+            <p>Start with the details you know. You can update them later.</p>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="debt-name">What is this debt?</label>
+        <input id="debt-name" type="text" formControlName="name" placeholder="e.g. Store account or personal loan"
+            autocomplete="off" maxlength="60"
+            [attr.aria-invalid]="form.controls.name.invalid && form.controls.name.touched"
+            aria-describedby="debt-name-hint debt-name-error" />
+        <span id="debt-name-hint" class="field-hint">
+            Use a name you will recognise on your dashboard.
+        </span>
+
+        @if (form.controls.name.touched && form.controls.name.invalid) {
+        <span id="debt-name-error" class="field-error">
+            Enter a name for this debt.
+        </span>
+        }
+    </div>
+
+    <div class="field-grid">
+        <div class="field">
+            <label for="debt-balance">Current balance</label>
+            <div class="money-input">
+                <span aria-hidden="true">R</span>
+                <input id="debt-balance" type="number" formControlName="balance" min="0.01" step="0.01"
+                    inputmode="decimal" placeholder="0.00" [attr.aria-invalid]="
+            form.controls.balance.invalid && form.controls.balance.touched
+          " aria-describedby="debt-balance-error" />
+            </div>
+
+            @if (form.controls.balance.touched && form.controls.balance.invalid) {
+            <span id="debt-balance-error" class="field-error">
+                Enter a balance greater than R0.
+            </span>
+            }
+        </div>
+
+        <div class="field">
+            <label for="monthly-payment">Monthly payment</label>
+            <div class="money-input">
+                <span aria-hidden="true">R</span>
+                <input id="monthly-payment" type="number" formControlName="monthlyPayment" min="0.01" step="0.01"
+                    inputmode="decimal" placeholder="0.00" [attr.aria-invalid]="
+            form.controls.monthlyPayment.invalid &&
+            form.controls.monthlyPayment.touched
+          " aria-describedby="monthly-payment-error" />
+            </div>
+
+            @if (
+            form.controls.monthlyPayment.touched &&
+            form.controls.monthlyPayment.invalid
+            ) {
+            <span id="monthly-payment-error" class="field-error">
+                Enter a monthly payment greater than R0.
+            </span>
+            }
+        </div>
+    </div>
+
+    <div class="form-note">
+        <span class="form-note__icon" aria-hidden="true">✳</span>
+        <p>
+            Use sample information while exploring the demo. These figures will
+            help build your debt overview and illustrative plan.
+        </p>
+    </div>
+
+    <div class="form-actions">
+        <button class="button button--secondary" type="button" (click)="cancelled.emit()">
+            Cancel
+        </button>
+
+        <button class="button button--primary" type="submit">
+            Add debt
+            <span aria-hidden="true">→</span>
+        </button>
+    </div>
+</form>

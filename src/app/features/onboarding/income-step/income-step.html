@@ -1,1 +1,81 @@
-<p>income-step works!</p>
+<app-public-header [showAction]="false" />
+
+<main class="onboarding-page">
+    <app-step-indicator [currentStep]="3" />
+
+    <section class="card">
+        <span class="eyebrow">STEP 3 OF 4</span>
+        <h1>Your monthly picture</h1>
+
+        <p class="intro">
+            Enter your take-home income and everyday expenses.
+            You’ll enter debt payments separately in My Debts.
+        </p>
+
+        <form #incomeForm="ngForm" (ngSubmit)="continue(incomeForm)">
+            <div class="form-grid">
+                <label class="field">
+                    <span>Monthly take-home income (R)</span>
+
+                    <input #income="ngModel" name="monthlyIncome" type="number" [(ngModel)]="monthlyIncome"
+                        placeholder="0.00" min="0" step="0.01" required />
+
+                    <small>Income after deductions.</small>
+
+                    @if (income.invalid && income.touched) {
+                    <span class="field-error">Enter an amount of zero or more.</span>
+                    }
+                </label>
+
+                <label class="field">
+                    <span>Everyday monthly expenses (R)</span>
+
+                    <input #expenses="ngModel" name="monthlyExpenses" type="number" [(ngModel)]="monthlyExpenses"
+                        placeholder="0.00" min="0" step="0.01" required />
+
+                    <small>
+                        Include rent, food, transport and other living costs.
+                        Exclude debt repayments.
+                    </small>
+
+                    @if (expenses.invalid && expenses.touched) {
+                    <span class="field-error">Enter an amount of zero or more.</span>
+                    }
+                </label>
+            </div>
+
+            @if (remaining !== null) {
+            <div class="info-box">
+                <h2>Remaining before debt payments</h2>
+
+                <p>
+                    <strong [class.negative]="remaining < 0">
+                        {{ remaining | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+                    </strong>
+                </p>
+
+                @if (remaining < 0) { <p>
+                    Your entered living expenses exceed your income.
+                    You can continue and review the figures later.
+                    </p>
+                    }
+            </div>
+            }
+
+            <p class="form-note">
+                This figure is not automatically assigned to your repayment plan.
+            </p>
+
+            <div class="actions">
+                <a class="button button--secondary" routerLink="/onboarding/profile">
+                    Back
+                </a>
+
+                <button class="button button--primary" type="submit" [disabled]="incomeForm.invalid">
+                    Continue
+                    <span aria-hidden="true">→</span>
+                </button>
+            </div>
+        </form>
+    </section>
+</main>

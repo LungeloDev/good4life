@@ -1,0 +1,132 @@
+:host {
+    display: block;
+    color: #29231e;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.button {
+    display: inline-flex;
+    min-height: 43px;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 11px 18px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.button--primary {
+    background: #ed6a24;
+    color: white;
+}
+
+.button--primary:hover {
+    background: #d95a19;
+}
+
+.button--secondary {
+    border-color: #e8dfd7;
+    background: white;
+    color: #c94e17;
+}
+
+.journey-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 24px;
+    border: 1px solid #f0dfcf;
+    border-radius: 15px;
+    background: #fff8f1;
+}
+
+.journey-icon {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    flex: none;
+    place-items: center;
+    border-radius: 13px;
+    background: #fff0e5;
+    color: #ed6a24;
+    font-size: 27px;
+}
+
+.journey-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.eyebrow {
+    color: #c94e17;
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+}
+
+h2 {
+    margin: 7px 0;
+    font-size: 18px;
+    letter-spacing: -0.04em;
+}
+
+.journey-copy p {
+    max-width: 540px;
+    margin: 0;
+    color: #918478;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.empty-action {
+    text-align: center;
+}
+
+.demo-note {
+    margin: 0;
+    color: #9b9086;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+a:focus-visible {
+    outline: 3px solid #c94e17;
+    outline-offset: 3px;
+}
+
+@media (max-width: 1150px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .journey-card {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .journey-card .button {
+        width: 100%;
+    }
+}

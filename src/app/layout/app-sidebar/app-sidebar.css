@@ -1,0 +1,147 @@
+:host {
+    display: block;
+    height: 100%;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.sidebar {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    padding: 30px 20px 22px;
+    border-right: 1px solid #ece5dd;
+    background: white;
+    color: #29231e;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 0 6px;
+}
+
+.brand-mark {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    flex: none;
+    place-items: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e65d1e, #f18b3d);
+    color: white;
+    font-size: 25px;
+    font-weight: 850;
+}
+
+.brand-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.brand-copy strong {
+    font-size: 20px;
+    letter-spacing: -0.05em;
+}
+
+.brand-copy small {
+    color: #96897e;
+    font-size: 9px;
+}
+
+.nav-label {
+    margin: 44px 12px 14px;
+    color: #a29589;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 47px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    color: #807469;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+nav a:hover {
+    background: #faf7f3;
+}
+
+nav a.active {
+    background: #fff0e5;
+    color: #c94e17;
+}
+
+.nav-icon {
+    width: 22px;
+    text-align: center;
+    font-size: 19px;
+}
+
+.encouragement {
+    margin-top: auto;
+    padding: 20px 16px;
+    border: 1px solid #f4e3d3;
+    border-radius: 13px;
+    background: #fff8f1;
+}
+
+.encouragement>span {
+    color: #ed6a24;
+    font-size: 25px;
+}
+
+.encouragement h2 {
+    margin: 11px 0 7px;
+    font-size: 14px;
+}
+
+.encouragement p {
+    margin: 0;
+    color: #958578;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 22px;
+    color: #a09286;
+    font-size: 9px;
+}
+
+.footer-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #76a85e;
+}
+
+a:focus-visible {
+    outline: 3px solid #ed6a24;
+    outline-offset: 3px;
+}

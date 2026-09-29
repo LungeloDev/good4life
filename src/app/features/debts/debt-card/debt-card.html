@@ -1,1 +1,33 @@
-<p>debt-card works!</p>
+<article class="debt-card">
+    <div class="debt-card__top">
+        <div class="debt-icon" aria-hidden="true">↗</div>
+
+        <div class="debt-title">
+            <h3>{{ debt().name }}</h3>
+            @if (priority()) {
+            <span class="priority-badge">Suggested first target</span>
+            }
+        </div>
+    </div>
+
+    <div class="amount">
+        <small>Current balance</small>
+        <strong>
+            {{ debt().balance | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+        </strong>
+    </div>
+
+    <div class="monthly">
+        <span>Monthly payment entered</span>
+        <strong>
+            {{ debt().monthlyPayment | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+        </strong>
+    </div>
+
+    <div class="actions">
+        <button type="button" (click)="edit.emit(debt())">Edit</button>
+        <button class="remove-button" type="button" (click)="remove.emit(debt())">
+            Remove
+        </button>
+    </div>
+</article>

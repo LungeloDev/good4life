@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
-  imports: [],
   selector: 'app-loading-state',
+  standalone: true,
   templateUrl: './loading-state.html',
   styleUrl: './loading-state.css',
 })
-export class LoadingState {}
+export class LoadingState {
+  readonly message = input('Loading your information…');
+}

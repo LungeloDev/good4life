@@ -1,0 +1,79 @@
+:host {
+    display: block;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.progress-card {
+    padding: 23px;
+    border: 1px solid #ece5dd;
+    border-radius: 15px;
+    background: white;
+    color: #29231e;
+}
+
+.card-heading,
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.eyebrow {
+    color: #c94e17;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+}
+
+h2 {
+    margin: 8px 0 0;
+    font-size: 18px;
+    letter-spacing: -0.04em;
+}
+
+.spark {
+    color: #ed6a24;
+    font-size: 25px;
+}
+
+.progress-values {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 27px;
+}
+
+.progress-values strong {
+    font-size: 25px;
+    letter-spacing: -0.05em;
+}
+
+.progress-values span {
+    color: #968a80;
+    font-size: 11px;
+}
+
+.track {
+    height: 9px;
+    overflow: hidden;
+    margin-top: 17px;
+    border-radius: 20px;
+    background: #f5eee8;
+}
+
+.track span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #f6b077, #ed6a24);
+}
+
+.card-footer {
+    margin-top: 12px;
+    color: #998e84;
+    font-size: 10px;
+}

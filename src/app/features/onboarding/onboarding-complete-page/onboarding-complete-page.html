@@ -1,1 +1,89 @@
-<p>onboarding-complete-page works!</p>
+<app-public-header [showAction]="false" />
+
+<main class="onboarding-page">
+    <app-step-indicator [currentStep]="store.complete() ? 4 : 1" />
+
+    <section class="card">
+        @if (store.complete()) {
+        <div class="hero-icon" aria-hidden="true">✓</div>
+
+        <span class="eyebrow">YOUR INITIAL DETAILS ARE READY</span>
+        <h1>You’re ready for the next step.</h1>
+
+        <p class="intro">
+            {{ store.profile().fullName }}, your sample profile and monthly
+            figures have been saved for this session. You can now explore
+            the dashboard and update your debts.
+        </p>
+
+        <div class="summary">
+            <div class="summary-row">
+                <span>Name</span>
+                <strong>{{ store.profile().fullName }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Monthly take-home income</span>
+                <strong>
+                    {{ store.income().monthlyIncome
+                    | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+                </strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Everyday monthly expenses</span>
+                <strong>
+                    {{ store.income().monthlyExpenses
+                    | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+                </strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Remaining before debt payments</span>
+                <strong [class.negative]="store.remainingBeforeDebtPayments() < 0">
+                    {{ store.remainingBeforeDebtPayments()
+                    | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+                </strong>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h2>What happens next?</h2>
+            <p>
+                The dashboard currently contains sample debts. Open My Debts
+                to replace them with your own demo entries.
+            </p>
+        </div>
+
+        <div class="actions">
+            <a class="button button--secondary" routerLink="/onboarding/income">
+                Review figures
+            </a>
+
+            <a class="button button--primary" routerLink="/dashboard">
+                Go to dashboard
+                <span aria-hidden="true">→</span>
+            </a>
+        </div>
+        } @else {
+        <span class="eyebrow">LET’S FINISH YOUR DETAILS</span>
+        <h1>Your onboarding is incomplete.</h1>
+
+        <p class="intro">
+            Complete the preceding steps. Refreshing the demo clears
+            details entered during the session.
+        </p>
+
+        <div class="actions">
+            <a class="button button--primary" routerLink="/onboarding/consent">
+                Start onboarding
+                <span aria-hidden="true">→</span>
+            </a>
+        </div>
+        }
+    </section>
+
+    <p class="demo-note">
+        Demo information resets on refresh.
+    </p>
+</main>

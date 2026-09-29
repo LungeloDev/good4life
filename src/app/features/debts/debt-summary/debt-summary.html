@@ -1,1 +1,32 @@
-<p>debt-summary works!</p>
+<section class="summary" aria-label="Debt summary">
+    <div class="summary-item summary-item--primary">
+        <span>Total balance</span>
+        <strong>
+            {{ totalBalance() | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+        </strong>
+        <small>Across {{ debts().length }} debts</small>
+    </div>
+
+    <div class="summary-item">
+        <span>Monthly payments entered</span>
+        <strong>
+            {{ totalMonthlyPayment() | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+        </strong>
+        <small>Combined entered amounts</small>
+    </div>
+
+    <div class="summary-item">
+        <span>Suggested first target</span>
+
+        @if (nextTarget(); as target) {
+        <strong class="summary-item__name">{{ target.name }}</strong>
+        <small>
+            {{ target.balance | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+            balance
+        </small>
+        } @else {
+        <strong class="summary-item__name">No debts yet</strong>
+        <small>Add a debt to begin</small>
+        }
+    </div>
+</section>

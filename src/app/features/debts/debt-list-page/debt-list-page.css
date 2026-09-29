@@ -1,0 +1,204 @@
+:host {
+    display: block;
+    color: #29231e;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.debt-page {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.button {
+    display: inline-flex;
+    min-height: 43px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 11px 18px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.button--primary {
+    background: #ed6a24;
+    color: white;
+}
+
+.button--primary:hover {
+    background: #d95a19;
+}
+
+.button--secondary {
+    border-color: #e8dfd7;
+    background: white;
+    color: #71655a;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.announcement {
+    margin: 0;
+    color: #56833f;
+    font-size: 12px;
+}
+
+.announcement:empty {
+    display: none;
+}
+
+.form-card {
+    padding: 24px;
+    border: 1px solid #ece5dd;
+    border-radius: 15px;
+    background: white;
+}
+
+.form-heading,
+.list-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.eyebrow {
+    color: #c94e17;
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+}
+
+.form-heading h2 {
+    margin: 7px 0 0;
+    font-size: 21px;
+}
+
+.close-button {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #ece5dd;
+    border-radius: 8px;
+    background: white;
+    color: #918478;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 24px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field--wide {
+    grid-column: 1 / -1;
+}
+
+.field>span {
+    color: #71655a;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+input {
+    width: 100%;
+    min-height: 45px;
+    padding: 11px 13px;
+    border: 1px solid #e5dcd3;
+    border-radius: 8px;
+    background: #fffdfa;
+    color: #29231e;
+    font: inherit;
+    font-size: 13px;
+}
+
+.form-hint,
+.demo-note {
+    margin: 14px 0 0;
+    color: #9b9086;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.form-error {
+    color: #bd4942;
+    font-size: 12px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.list-heading h2 {
+    margin: 0;
+    font-size: 19px;
+}
+
+.list-heading>span {
+    color: #9b9086;
+    font-size: 11px;
+}
+
+.debt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.demo-note {
+    margin: 0;
+}
+
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid #ed6a24;
+    outline-offset: 3px;
+}
+
+@media (max-width: 1150px) {
+    .debt-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+
+    .debt-grid,
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field--wide {
+        grid-column: auto;
+    }
+
+    .form-card {
+        padding: 20px;
+    }
+
+    .form-actions .button {
+        flex: 1;
+    }
+}

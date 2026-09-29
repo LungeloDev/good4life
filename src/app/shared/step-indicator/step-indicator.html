@@ -1,1 +1,17 @@
-<p>step-indicator works!</p>
+<nav aria-label="Onboarding progress">
+    <ol class="steps">
+        @for (step of steps(); track $index; let index = $index) {
+        <li class="step" [class.step--active]="index + 1 === currentStep()"
+            [class.step--completed]="index + 1 < currentStep()"
+            [attr.aria-current]="index + 1 === currentStep() ? 'step' : null">
+            <span class="step-number" aria-hidden="true">
+                @if (index + 1 < currentStep()) { ✓ } @else { {{ index + 1 }} } </span>
+
+                    <span class="step-label">{{ step }}</span>
+
+                    @if (index + 1 < currentStep()) { <span class="sr-only"> — completed</span>
+            }
+        </li>
+        }
+    </ol>
+</nav>

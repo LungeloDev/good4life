@@ -1,1 +1,52 @@
-<p>dashboard-page works!</p>
+<app-page-header eyebrow="YOUR OVERVIEW" title="A clearer picture of your finances"
+    description="See your balances, choose a starting point and work towards your next milestone.">
+    <a class="button button--primary" routerLink="/debts">
+        Manage my debts
+        <span aria-hidden="true">→</span>
+    </a>
+</app-page-header>
+
+<div class="dashboard-content">
+    <app-financial-overview [totalBalance]="store.totalBalance()" [monthlyPayments]="store.monthlyPayments()"
+        [debtCount]="store.debts().length" />
+
+    @if (store.debts().length > 0) {
+    <div class="dashboard-grid">
+        <app-next-target-card [debt]="store.nextTarget()" />
+
+        <app-progress-card [targetName]="store.nextTarget()?.name ?? 'First target'"
+            [targetAmount]="store.nextTarget()?.balance ?? 0" [paidAmount]="0" />
+    </div>
+
+    <section class="journey-card">
+        <div class="journey-icon" aria-hidden="true">◎</div>
+
+        <div class="journey-copy">
+            <span class="eyebrow">YOUR NEXT STEP</span>
+            <h2>Explore your repayment plan</h2>
+            <p>
+                Review the smallest-balance order and an illustrative monthly
+                projection based on the payments you entered.
+            </p>
+        </div>
+
+        <a class="button button--secondary" routerLink="/repayment-plan">
+            View my plan
+            <span aria-hidden="true">→</span>
+        </a>
+    </section>
+    } @else {
+    <app-empty-state title="Let’s build your overview"
+        description="Add your first debt to see your balance and a suggested starting point." />
+
+    <div class="empty-action">
+        <a class="button button--primary" routerLink="/debts">
+            Add my first debt
+        </a>
+    </div>
+    }
+
+    <p class="demo-note">
+        Demo overview. No repayments have been recorded.
+    </p>
+</div>

@@ -1,1 +1,24 @@
-<p>financial-overview works!</p>
+<section class="overview" aria-label="Financial overview">
+    <article class="metric metric--primary">
+        <span>Total debt balance</span>
+        <strong>
+            {{ totalBalance() | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+        </strong>
+        <small>Across {{ debtCount() }} debts</small>
+        <div class="metric__circle" aria-hidden="true"></div>
+    </article>
+
+    <article class="metric">
+        <span>Monthly payments entered</span>
+        <strong>
+            {{ monthlyPayments() | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+        </strong>
+        <small>Combined amounts entered</small>
+    </article>
+
+    <article class="metric">
+        <span>Debts in your overview</span>
+        <strong>{{ debtCount() }}</strong>
+        <small>Balances brought into one view</small>
+    </article>
+</section>

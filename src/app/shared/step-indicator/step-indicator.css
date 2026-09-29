@@ -1,0 +1,93 @@
+:host {
+    display: block;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.steps {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.step {
+    position: relative;
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    color: #a09387;
+}
+
+.step:not(:last-child)::after {
+    position: absolute;
+    top: 17px;
+    left: calc(50% + 23px);
+    width: calc(100% - 46px);
+    height: 2px;
+    background: #e9dfd5;
+    content: "";
+}
+
+.step--completed:not(:last-child)::after {
+    background: #ed6a24;
+}
+
+.step-number {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: none;
+    place-items: center;
+    border: 1px solid #e6dbd0;
+    border-radius: 50%;
+    background: #faf7f3;
+    font-size: 12px;
+    font-weight: 850;
+}
+
+.step--active .step-number {
+    border-color: #ed6a24;
+    background: #ed6a24;
+    color: white;
+    box-shadow: 0 0 0 5px #fff0e5;
+}
+
+.step--completed .step-number {
+    border-color: #ed6a24;
+    background: #fff0e5;
+    color: #c94e17;
+}
+
+.step-label {
+    font-size: 11px;
+    font-weight: 750;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.step--active .step-label,
+.step--completed .step-label {
+    color: #c94e17;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+@media (max-width: 450px) {
+    .step-label {
+        font-size: 9px;
+    }
+}

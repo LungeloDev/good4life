@@ -1,1 +1,33 @@
-<p>progress-card works!</p>
+<article class="progress-card">
+    <div class="card-heading">
+        <div>
+            <span class="eyebrow">PROGRESS</span>
+            <h2>{{ targetName() }}</h2>
+        </div>
+        <span class="spark" aria-hidden="true">✳</span>
+    </div>
+
+    <div class="progress-values">
+        <strong>
+            {{ paidAmount() | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+        </strong>
+        <span>
+            of {{ targetAmount() | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+            recorded
+        </span>
+    </div>
+
+    <div class="track" role="progressbar" [attr.aria-valuenow]="percentage()" aria-valuemin="0" aria-valuemax="100"
+        [attr.aria-label]="targetName() + ' repayment progress'">
+        <span [style.width.%]="percentage()"></span>
+    </div>
+
+    <div class="card-footer">
+        <span>{{ percentage() }}% recorded</span>
+        @if (paidAmount() === 0) {
+        <span>No payments recorded yet</span>
+        } @else {
+        <span>Based on entered payments</span>
+        }
+    </div>
+</article>

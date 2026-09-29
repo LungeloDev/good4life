@@ -1,0 +1,45 @@
+:host {
+    display: block;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.loading-state {
+    display: flex;
+    min-height: 200px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 17px;
+    padding: 30px;
+    border: 1px solid #ece5dd;
+    border-radius: 15px;
+    background: white;
+}
+
+.spinner {
+    width: 34px;
+    height: 34px;
+    border: 3px solid #fff0e5;
+    border-top-color: #ed6a24;
+    border-radius: 50%;
+    animation: spin 0.85s linear infinite;
+}
+
+p {
+    margin: 0;
+    color: #918478;
+    font-size: 12px;
+    text-align: center;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spinner {
+        animation: none;
+    }
+}
