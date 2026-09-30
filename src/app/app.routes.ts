@@ -101,8 +101,16 @@ export const routes: Routes = [
                     import('./features/repayment/repayment-plan-page/repayment-plan-page')
                         .then(m => m.RepaymentPlanPage),
             },
+            {
+                path: 'debt-options',
+                title: 'Debt options | GooD4Life',
+                loadComponent: () =>
+                    import('./features/debt-options/debt-options-page/debt-options-page')
+                        .then(m => m.DebtOptionsPage),
+            },
         ],
     },
+
     {
         path: '**',
         redirectTo: '',

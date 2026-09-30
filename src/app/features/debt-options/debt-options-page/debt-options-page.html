@@ -1,0 +1,426 @@
+<app-page-header eyebrow="EXPLORE YOUR OPTIONS" title="Debt Options Assessment"
+    description="Enter your credit-status and property details to organise the questions you may want to discuss with a lender.">
+    <a class="button button--secondary" routerLink="/repayment-plan">
+        My repayment plan →
+    </a>
+</app-page-header>
+
+@if (loading()) {
+<app-loading-state message="Loading your saved assessment…" />
+} @else if (loadError()) {
+<section class="card">
+    <p class="error" role="alert">{{ loadError() }}</p>
+
+    <button class="button button--primary" type="button" (click)="load()">
+        Try again
+    </button>
+</section>
+} @else {
+<div class="page-layout">
+    <section class="card">
+        <div class="section-heading">
+            <span class="step-number" aria-hidden="true">01</span>
+            <div>
+                <h2>Credit and property details</h2>
+                <p>Manual entry only. Leave optional figures blank if unknown.</p>
+            </div>
+        </div>
+
+        <form #assessmentForm="ngForm" (ngSubmit)="submit(assessmentForm)">
+            <fieldset [disabled]="saving()">
+                <legend>Credit information</legend>
+
+                <div class="guidance">
+                    <h3>Where can I check my score?</h3>
+
+                    <p>
+                        Check Experian, TransUnion, ClearScore, or your banking app
+                        if it offers a credit-score feature. Return here and enter
+                        the information exactly as shown.
+                    </p>
+
+                    <div class="provider-links">
+                        <a href="https://www.experian.co.za/" target="_blank" rel="noopener noreferrer">
+                            Experian ↗
+                        </a>
+
+                        <a href="https://www.transunion.co.za/" target="_blank" rel="noopener noreferrer">
+                            TransUnion ↗
+                        </a>
+
+                        <a href="https://www.clearscore.com/za" target="_blank" rel="noopener noreferrer">
+                            ClearScore ↗
+                        </a>
+                    </div>
+
+                    <p class="small">
+                        This app does not retrieve or verify your score.
+                        Do not enter banking passwords or provider login details.
+                    </p>
+                </div>
+
+                <div class="form-grid">
+                    <label class="field">
+                        <span>Where did you check your score?</span>
+
+                        <select name="creditProvider" [(ngModel)]="draft.creditProvider">
+                            @for (provider of providers; track provider.value) {
+                            <option [value]="provider.value">{{ provider.label }}</option>
+                            }
+                        </select>
+                    </label>
+
+                    <label class="field">
+                        <span>Credit score — optional</span>
+
+                        <input name="creditScore" type="number" [(ngModel)]="draft.creditScore"
+                            placeholder="Enter the displayed score" min="0" max="10000" step="1" />
+
+                        <small>
+                            Scores use provider-specific scales. We do not assign a
+                            universal rating or approval threshold.
+                        </small>
+                    </label>
+
+                    @if (
+                    draft.creditProvider === 'bank' ||
+                    draft.creditProvider === 'other'
+                    ) {
+                    <label class="field">
+                        <span>Bank or provider name</span>
+
+                        <input name="providerDetail" type="text" [(ngModel)]="draft.providerDetail"
+                            placeholder="Enter the provider name" maxlength="120" pattern=".*\S.*" required />
+                    </label>
+                    }
+
+                    <label class="field">
+                        <span>Date shown on the report — optional</span>
+
+                        <input name="creditReportDate" type="date" [(ngModel)]="draft.creditReportDate" [max]="today" />
+                    </label>
+
+                    <label class="field">
+                        <span>Do you have accounts in arrears?</span>
+
+                        <select name="hasArrears" [(ngModel)]="draft.hasArrears">
+                            @for (answer of answers; track answer.value) {
+                            <option [value]="answer.value">{{ answer.label }}</option>
+                            }
+                        </select>
+                    </label>
+
+                    <label class="field">
+                        <span>Do you have outstanding judgments?</span>
+
+                        <select name="hasJudgments" [(ngModel)]="draft.hasJudgments">
+                            @for (answer of answers; track answer.value) {
+                            <option [value]="answer.value">{{ answer.label }}</option>
+                            }
+                        </select>
+                    </label>
+
+                    <label class="field field--wide">
+                        <span>Are you currently under debt review?</span>
+
+                        <select name="underDebtReview" [(ngModel)]="draft.underDebtReview">
+                            @for (answer of answers; track answer.value) {
+                            <option [value]="answer.value">{{ answer.label }}</option>
+                            }
+                        </select>
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset [disabled]="saving()">
+                <legend>Property information</legend>
+
+                <div class="form-grid">
+                    <label class="field">
+                        <span>Do you own a home?</span>
+
+                        <select name="ownsHome" [(ngModel)]="draft.ownsHome">
+                            @for (answer of answers; track answer.value) {
+                            <option [value]="answer.value">{{ answer.label }}</option>
+                            }
+                        </select>
+                    </label>
+
+                    @if (draft.ownsHome === 'yes') {
+                    <label class="field">
+                        <span>Does the property have a home loan?</span>
+
+                        <select name="hasHomeLoan" [(ngModel)]="draft.hasHomeLoan">
+                            @for (answer of answers; track answer.value) {
+                            <option [value]="answer.value">{{ answer.label }}</option>
+                            }
+                        </select>
+                    </label>
+
+                    <label class="field field--wide">
+                        <span>Estimated current property value (R) — optional</span>
+
+                        <input name="propertyValue" type="number" [(ngModel)]="draft.propertyValue" min="0"
+                            max="1000000000000" step="0.01" placeholder="Your estimate, not a lender valuation" />
+                    </label>
+                    }
+
+                    @if (draft.ownsHome === 'yes' && draft.hasHomeLoan === 'yes') {
+                    <label class="field field--wide">
+                        <span>Home-loan provider — optional</span>
+
+                        <input name="homeLoanProvider" type="text" [(ngModel)]="draft.homeLoanProvider" maxlength="120"
+                            placeholder="Bank or lender name" />
+                    </label>
+
+                    <label class="field">
+                        <span>Original home-loan amount (R) — optional</span>
+
+                        <input name="originalLoanAmount" type="number" [(ngModel)]="draft.originalLoanAmount" min="0"
+                            max="1000000000000" step="0.01" placeholder="Original amount borrowed" />
+                    </label>
+
+                    <label class="field">
+                        <span>Current home-loan balance (R) — optional</span>
+
+                        <input name="homeLoanBalance" type="number" [(ngModel)]="draft.homeLoanBalance" min="0"
+                            max="1000000000000" step="0.01" placeholder="Latest outstanding balance" />
+                    </label>
+
+                    <label class="field">
+                        <span>Monthly instalment (R) — optional</span>
+
+                        <input name="monthlyInstalment" type="number" [(ngModel)]="draft.monthlyInstalment" min="0"
+                            max="1000000000000" step="0.01" placeholder="Current monthly instalment" />
+                    </label>
+
+                    <label class="field">
+                        <span>Annual interest rate (%) — optional</span>
+
+                        <input name="annualInterestRate" type="number" [(ngModel)]="draft.annualInterestRate" min="0"
+                            max="100" step="0.01" placeholder="For example, 11.50" />
+                    </label>
+
+                    <label class="field">
+                        <span>Remaining term in months — optional</span>
+
+                        <input name="remainingMonths" type="number" [(ngModel)]="draft.remainingMonths" min="1"
+                            max="600" step="1" placeholder="For example, 180" />
+                    </label>
+                    }
+                </div>
+            </fieldset>
+
+            <p class="small privacy-note">
+                Saving stores these answers in your account. Use sample information
+                while testing. No application is sent to a lender.
+            </p>
+
+            @if (saveError()) {
+            <p class="error" role="alert">{{ saveError() }}</p>
+            }
+
+            @if (success()) {
+            <p class="success" role="status">{{ success() }}</p>
+            }
+
+            <div class="form-actions">
+                <button class="button button--primary" type="submit" [disabled]="assessmentForm.invalid || saving()">
+                    {{ saving() ? 'Saving…' : 'Save and view assessment' }}
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <aside class="results-column">
+        <section class="card overview-card">
+            <span class="eyebrow">YOUR ENTERED DEBTS</span>
+
+            @if (debtStore.loading()) {
+            <p>Loading debt summary…</p>
+            } @else if (debtStore.error()) {
+            <p class="error" role="alert">{{ debtStore.error() }}</p>
+            } @else {
+            <strong class="large-amount">
+                {{ debtStore.totalBalance()
+                | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+            </strong>
+
+            <p>
+                Across {{ debtStore.debts().length }} debt entries.
+            </p>
+
+            <p class="small">
+                Includes every balance in My Debts. A home loan entered there
+                is also included; this is not an unsecured-debt-only total.
+            </p>
+            }
+
+            <a class="text-link" routerLink="/debts">Review my debts →</a>
+        </section>
+
+        @if (savedAssessment(); as assessment) {
+        <section class="card">
+            <span class="eyebrow">SAVED ASSESSMENT</span>
+            <h2>Your discussion points</h2>
+
+            @if (assessment.creditScore !== null) {
+            <div class="score-summary">
+                <strong>{{ assessment.creditScore }}</strong>
+
+                <div>
+                    <span>{{ providerLabel(assessment) }}</span>
+                    <small>
+                        Self-reported ·
+                        {{ assessment.creditReportDate || 'Report date not entered' }}
+                    </small>
+                </div>
+            </div>
+            } @else {
+            <p class="muted">
+                No credit score entered. You can add one later.
+            </p>
+            }
+
+            @if (needsReview()) {
+            <div class="notice notice--warning">
+                <h3>Review your credit situation first</h3>
+                <p>
+                    You reported arrears, judgments or debt review.
+                    Discuss your circumstances with your lender or a qualified
+                    debt counsellor before considering additional borrowing.
+                    This assessment does not determine eligibility.
+                </p>
+            </div>
+            }
+
+            @if (creditStatusUnknown()) {
+            <div class="notice">
+                <h3>Some credit-status answers are unknown</h3>
+                <p>
+                    Check your report and account statements before relying
+                    on a borrowing scenario.
+                </p>
+            </div>
+            }
+
+            @if (assessment.ownsHome === 'no') {
+            <div class="notice">
+                <h3>Continue with your repayment plan</h3>
+                <p>
+                    You have not reported owning a home, so no home-loan
+                    illustration is shown.
+                </p>
+            </div>
+            } @else if (assessment.ownsHome === 'unknown') {
+            <div class="notice">
+                <h3>Property information needed</h3>
+                <p>
+                    Confirm whether you own a property before exploring
+                    property-backed borrowing.
+                </p>
+            </div>
+            } @else if (assessment.hasHomeLoan === 'no') {
+            <div class="notice">
+                <h3>Paid-off property enquiry</h3>
+                <p>
+                    New borrowing against a paid-off property would be a separate
+                    secured-lending enquiry, not an existing-loan readvance.
+                    There is no approval or borrowing amount calculated here.
+                </p>
+            </div>
+            } @else if (assessment.hasHomeLoan === 'unknown') {
+            <div class="notice">
+                <h3>Confirm your home-loan position</h3>
+                <p>
+                    Check whether a home loan remains outstanding before
+                    estimating repaid principal or equity.
+                </p>
+            </div>
+            } @else {
+            <div class="notice">
+                <h3>Questions for your home-loan lender</h3>
+                <p>
+                    Ask whether a readvance or further-lending facility exists,
+                    what it would cost, and how repayments would change.
+                    Availability requires lender confirmation.
+                </p>
+            </div>
+
+            @if (readvanceIllustration() !== null) {
+            <div class="estimate">
+                <span>Original loan less current balance</span>
+                <strong>
+                    {{ readvanceIllustration()
+                    | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+                </strong>
+                <small>
+                    Arithmetic illustration only—not approved or available funds.
+                </small>
+            </div>
+            } @else {
+            <p class="small">
+                Enter the original loan and current balance to display
+                the repaid-principal illustration.
+            </p>
+            }
+
+            @if (
+            assessment.originalLoanAmount !== null &&
+            assessment.homeLoanBalance !== null &&
+            assessment.homeLoanBalance > assessment.originalLoanAmount
+            ) {
+            <p class="small">
+                The current balance exceeds the original loan amount.
+                The illustration is shown as zero; check the figures and
+                any subsequent borrowing with your lender.
+            </p>
+            }
+            }
+
+            @if (equityIllustration() !== null) {
+            <div class="estimate">
+                <span>Estimated property value less reported loan balance</span>
+                <strong>
+                    {{ equityIllustration()
+                    | currency:'ZAR':'symbol-narrow':'1.2-2' }}
+                </strong>
+                <small>
+                    Equity illustration only. This is not a further-bond limit
+                    or a lender valuation.
+                </small>
+            </div>
+            }
+
+            <div class="notice notice--warning">
+                <h3>Protect your home</h3>
+                <p>
+                    Moving other debts into a home loan does not eliminate the debt.
+                    It secures the borrowing against your property, which may be
+                    at risk if repayments are not maintained. Compare fees,
+                    total interest and repayment term—not only monthly instalments.
+                </p>
+            </div>
+
+            <p class="small">
+                Educational assessment only. No lender application, credit check,
+                approval decision or debt settlement is performed.
+            </p>
+
+            <a class="button button--secondary full-width" routerLink="/repayment-plan">
+                View existing repayment plan →
+            </a>
+        </section>
+        } @else {
+        <section class="card">
+            <span class="eyebrow">YOUR RESULTS</span>
+            <h2>Start with your details</h2>
+            <p class="muted">
+                Save the questionnaire to display your assessment.
+                Unknown answers are allowed.
+            </p>
+        </section>
+        }
+    </aside>
+</div>
+}

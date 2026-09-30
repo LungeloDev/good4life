@@ -35,5 +35,10 @@ export class AppSidebar {
     { label: 'Dashboard', path: '/dashboard', icon: '▦' },
     { label: 'My Debts', path: '/debts', icon: '↗' },
     { label: 'Repayment Plan', path: '/repayment-plan', icon: '◎' },
+    {
+      label: 'Debt Options',
+      path: '/debt-options',
+      icon: '◇',
+    },
   ];
 }
