@@ -5,4 +5,12 @@
         <span>{{ link.label }}</span>
     </a>
     }
+
+    <button class="logout-button" type="button" [disabled]="signingOut()" (click)="logout()">
+        {{ signingOut() ? 'Signing out…' : 'Sign out' }}
+    </button>
+
+    @if (logoutError()) {
+    <p class="logout-error" role="alert">{{ logoutError() }}</p>
+    }
 </nav>

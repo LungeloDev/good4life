@@ -5,7 +5,11 @@
         <span aria-hidden="true">→</span>
     </a>
 </app-page-header>
-
+@if (store.loading()) {
+<app-loading-state message="Loading your repayment plan…" />
+} @else if (store.error()) {
+<p role="alert">{{ store.error() }}</p>
+} @else {
 <div class="plan-page">
     @if (store.orderedDebts().length > 0) {
     <section class="plan-summary" aria-label="Projection summary">
@@ -80,3 +84,4 @@
     </div>
     }
 </div>
+}

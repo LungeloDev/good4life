@@ -17,8 +17,8 @@
                 <label class="field">
                     <span>Monthly take-home income (R)</span>
 
-                    <input #income="ngModel" name="monthlyIncome" type="number" [(ngModel)]="monthlyIncome"
-                        placeholder="0.00" min="0" step="0.01" required />
+                    <input #income="ngModel" [disabled]="saving()" name="monthlyIncome" type="number"
+                        [(ngModel)]="monthlyIncome" placeholder="0.00" min="0" step="0.01" required />
 
                     <small>Income after deductions.</small>
 
@@ -30,8 +30,8 @@
                 <label class="field">
                     <span>Everyday monthly expenses (R)</span>
 
-                    <input #expenses="ngModel" name="monthlyExpenses" type="number" [(ngModel)]="monthlyExpenses"
-                        placeholder="0.00" min="0" step="0.01" required />
+                    <input #expenses="ngModel" [disabled]="saving()" name="monthlyExpenses" type="number"
+                        [(ngModel)]="monthlyExpenses" placeholder="0.00" min="0" step="0.01" required />
 
                     <small>
                         Include rent, food, transport and other living costs.
@@ -65,13 +65,19 @@
             <p class="form-note">
                 This figure is not automatically assigned to your repayment plan.
             </p>
+            @if (saveError()) {
+            <p class="field-error" role="alert">{{ saveError() }}</p>
+            }
 
+            @if (saving()) {
+            <p class="form-note" role="status">Saving your details…</p>
+            }
             <div class="actions">
                 <a class="button button--secondary" routerLink="/onboarding/profile">
                     Back
                 </a>
 
-                <button class="button button--primary" type="submit" [disabled]="incomeForm.invalid">
+                <button class="button button--primary" type="submit" [disabled]="incomeForm.invalid || saving()">
                     Continue
                     <span aria-hidden="true">→</span>
                 </button>

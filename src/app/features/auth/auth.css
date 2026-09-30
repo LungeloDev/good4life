@@ -1,0 +1,144 @@
+:host {
+    display: block;
+    min-height: 100dvh;
+    background: #faf7f3;
+    color: #29231e;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.auth-page {
+    display: flex;
+    justify-content: center;
+    padding: 48px 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 34px;
+    border: 1px solid #ece5dd;
+    border-radius: 18px;
+    background: white;
+}
+
+.eyebrow {
+    color: #c94e17;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+}
+
+h1 {
+    margin: 12px 0;
+    font-size: 29px;
+    letter-spacing: -0.05em;
+}
+
+.intro {
+    margin: 0;
+    color: #918478;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    margin-top: 28px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field>span {
+    color: #71655a;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.field small {
+    color: #918478;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+input {
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 13px;
+    border: 1px solid #e5dcd3;
+    border-radius: 8px;
+    background: #fffdfa;
+    color: #29231e;
+    font: inherit;
+    font-size: 13px;
+}
+
+.submit-button {
+    min-height: 45px;
+    border: 0;
+    border-radius: 8px;
+    background: #ed6a24;
+    color: white;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background: #d95a19;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.error {
+    margin: 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: #fcebea;
+    color: #bd4942;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.switch-page {
+    margin: 24px 0 0;
+    color: #918478;
+    font-size: 12px;
+    text-align: center;
+}
+
+.switch-page a {
+    color: #c94e17;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #ed6a24;
+    outline-offset: 3px;
+}
+
+@media (max-width: 500px) {
+    .auth-page {
+        padding: 28px 16px;
+    }
+
+    .auth-card {
+        padding: 26px 22px;
+    }
+}

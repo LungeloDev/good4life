@@ -13,6 +13,14 @@
         {{ announcement() }}
     </p>
 
+    @if (actionError()) {
+    <p class="form-error" role="alert">{{ actionError() }}</p>
+    }
+
+    @if (removing()) {
+    <p role="status">Removing debt…</p>
+    }
+
     @if (formOpen()) {
     <section class="form-card" aria-labelledby="debt-form-title">
         <div class="form-heading">
@@ -62,15 +70,19 @@
                     Cancel
                 </button>
 
-                <button class="button button--primary" type="submit" [disabled]="debtForm.invalid">
-                    {{ editingId() ? 'Save changes' : 'Add debt' }}
+                <button class="button button--primary" type="submit" [disabled]="debtForm.invalid || saving()">
+                    {{ saving() ? 'Saving…' : (editingId() ? 'Save changes' : 'Add debt') }}
                 </button>
             </div>
         </form>
     </section>
     }
 
-    @if (store.debts().length > 0) {
+    @if (store.loading()) {
+  <app-loading-state message="Loading your debts…" />
+} @else if (store.error()) {
+  <p class="form-error" role="alert">{{ store.error() }}</p>
+} @else if (store.debts().length > 0) {
     <div class="list-heading">
         <h2>Your accounts</h2>
         <span>{{ store.debts().length }} debts entered</span>

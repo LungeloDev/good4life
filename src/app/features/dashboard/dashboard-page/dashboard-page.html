@@ -5,7 +5,11 @@
         <span aria-hidden="true">→</span>
     </a>
 </app-page-header>
-
+@if (store.loading()) {
+<app-loading-state message="Loading your overview…" />
+} @else if (store.error()) {
+<p role="alert">{{ store.error() }}</p>
+} @else {
 <div class="dashboard-content">
     <app-financial-overview [totalBalance]="store.totalBalance()" [monthlyPayments]="store.monthlyPayments()"
         [debtCount]="store.debts().length" />
@@ -46,7 +50,9 @@
     </div>
     }
 
+
     <p class="demo-note">
         Demo overview. No repayments have been recorded.
     </p>
 </div>
+}

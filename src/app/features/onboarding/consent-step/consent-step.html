@@ -15,28 +15,34 @@
         <div class="info-box">
             <h2>About this demo</h2>
             <p>
-                Use sample details. Information is held in memory for this session
-                and resets when you refresh. This flow does not retrieve a credit
-                report, contact creditors or make payments.
+                Your entered profile, income and debt details are saved to your account.
+                This flow does not retrieve a credit report, contact creditors or make
+                payments. Please use sample information while testing.
             </p>
         </div>
 
         <form (ngSubmit)="continue()">
             <label class="check-row">
-                <input name="accepted" type="checkbox" [(ngModel)]="accepted" required />
+                <input name="accepted" [disabled]="saving()" type="checkbox" [(ngModel)]="accepted" required />
 
                 <span>
-                    I understand how this demo uses the information I enter
-                    and want to continue.
+                    I understand that this test application saves the information I enter
+                    to my account and want to continue.
                 </span>
             </label>
+            @if (saveError()) {
+            <p class="field-error" role="alert">{{ saveError() }}</p>
+            }
 
+            @if (saving()) {
+            <p class="form-note" role="status">Saving your details…</p>
+            }
             <div class="actions">
                 <a class="button button--secondary" routerLink="/onboarding/welcome">
                     Back
                 </a>
 
-                <button class="button button--primary" type="submit" [disabled]="!accepted">
+                <button class="button button--primary" type="submit" [disabled]="!accepted || saving()">
                     Continue
                     <span aria-hidden="true">→</span>
                 </button>

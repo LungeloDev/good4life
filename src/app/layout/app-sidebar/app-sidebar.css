@@ -145,3 +145,27 @@ a:focus-visible {
     outline: 3px solid #ed6a24;
     outline-offset: 3px;
 }
+
+.logout-button {
+    min-height: 42px;
+    margin-top: 18px;
+    border: 1px solid #e8dfd7;
+    border-radius: 8px;
+    background: white;
+    color: #71655a;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 750;
+    cursor: pointer;
+}
+
+.logout-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.logout-error {
+    color: #bd4942;
+    font-size: 11px;
+    line-height: 1.6;
+}

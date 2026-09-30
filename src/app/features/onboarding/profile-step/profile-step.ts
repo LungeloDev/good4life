@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -16,21 +16,31 @@ import { StepIndicator } from '../../../shared/step-indicator/step-indicator';
 export class ProfileStep {
   private readonly store = inject(OnboardingStore);
   private readonly router = inject(Router);
+  readonly saving = signal(false);
+  readonly saveError = signal('');
 
   draft = { ...this.store.profile() };
 
-  continue(form: NgForm): void {
-    if (form.invalid || !this.draft.fullName.trim()) {
-      form.control.markAllAsTouched();
-      return;
-    }
+  async continue(form: NgForm): Promise<void> {
+  if (this.saving()) return;
 
-    this.store.profile.set({
-      fullName: this.draft.fullName.trim(),
-      email: this.draft.email.trim(),
-      phone: this.draft.phone.trim(),
-    });
-
-    void this.router.navigate(['/onboarding/income']);
+  if (form.invalid || !this.draft.fullName.trim()) {
+    form.control.markAllAsTouched();
+    return;
   }
+
+  this.saveError.set('');
+  this.saving.set(true);
+
+  try {
+    await this.store.saveProfile(this.draft);
+    await this.router.navigate(['/onboarding/income']);
+  } catch {
+    this.saveError.set(
+      'Could not save your profile. Please try again.'
+    );
+  } finally {
+    this.saving.set(false);
+  }
+}
 }

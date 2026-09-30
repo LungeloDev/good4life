@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -16,13 +16,26 @@ import { StepIndicator } from '../../../shared/step-indicator/step-indicator';
 export class ConsentStep {
   private readonly store = inject(OnboardingStore);
   private readonly router = inject(Router);
+  readonly saving = signal(false);
+  readonly saveError = signal('');
 
   accepted = this.store.consentAccepted();
 
-  continue(): void {
-    if (!this.accepted) return;
+  async continue(): Promise<void> {
+  if (!this.accepted || this.saving()) return;
 
-    this.store.consentAccepted.set(true);
-    void this.router.navigate(['/onboarding/profile']);
+  this.saveError.set('');
+  this.saving.set(true);
+
+  try {
+    await this.store.saveConsent();
+    await this.router.navigate(['/onboarding/profile']);
+  } catch {
+    this.saveError.set(
+      'Could not save your acknowledgement. Please try again.'
+    );
+  } finally {
+    this.saving.set(false);
   }
+}
 }

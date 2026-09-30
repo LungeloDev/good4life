@@ -1,42 +1,55 @@
 import { Component, inject, signal } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+
+import { AuthService } from '../../../core/services/auth.service';
+import { PublicHeader } from '../../../layout/public-header/public-header';
 
 @Component({
   selector: 'app-login-page',
-  imports: [ReactiveFormsModule, RouterLink],
+  standalone: true,
+  imports: [FormsModule, RouterLink, PublicHeader],
   templateUrl: './login-page.html',
-  styleUrl: './login-page.css',
+  styleUrl: '../auth.css',
 })
 export class LoginPage {
-  private readonly formBuilder = inject(FormBuilder);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
-  readonly showPassword = signal(false);
-  readonly showAuthNotice = signal(false);
+  readonly submitting = signal(false);
+  readonly error = signal(
+    this.route.snapshot.queryParamMap.get('dataError') === 'true'
+      ? 'Your saved details could not be loaded. Check your connection and Firestore rules, then sign in again.'
+      : ''
+  );
 
-  readonly form = this.formBuilder.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
-  });
+  email = '';
+  password = '';
 
-  togglePassword(): void {
-    this.showPassword.update(value => !value);
-  }
+  async submit(form: NgForm): Promise<void> {
+    if (form.invalid || this.submitting()) return;
 
-  onSubmit(): void {
-    this.form.markAllAsTouched();
-    this.showAuthNotice.set(false);
+    this.error.set('');
+    this.submitting.set(true);
 
-    if (this.form.invalid) {
-      return;
+    try {
+      await this.auth.login(this.email, this.password);
+
+      const requestedUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+
+      const destination =
+        requestedUrl?.startsWith('/') &&
+          !requestedUrl.startsWith('//') &&
+          !requestedUrl.includes('\\')
+          ? requestedUrl
+          : '/dashboard';
+
+      await this.router.navigateByUrl(destination);
+    } catch (error) {
+      this.error.set(this.auth.errorMessage(error));
+    } finally {
+      this.submitting.set(false);
     }
-
-    // Connect your authentication service here.
-    // Do not navigate to the private dashboard without a successful sign-in.
-    this.showAuthNotice.set(true);
   }
 }

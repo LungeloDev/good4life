@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -23,6 +23,8 @@ import { StepIndicator } from '../../../shared/step-indicator/step-indicator';
 export class IncomeStep {
   private readonly store = inject(OnboardingStore);
   private readonly router = inject(Router);
+  readonly saving = signal(false);
+  readonly saveError = signal('');
 
   monthlyIncome: number | null = this.store.incomeEntered()
     ? this.store.income().monthlyIncome
@@ -40,7 +42,9 @@ export class IncomeStep {
     return this.monthlyIncome - this.monthlyExpenses;
   }
 
-  continue(form: NgForm): void {
+  async continue(form: NgForm): Promise<void> {
+    if (this.saving()) return;
+
     const income = this.monthlyIncome;
     const expenses = this.monthlyExpenses;
 
@@ -57,13 +61,22 @@ export class IncomeStep {
       return;
     }
 
-    this.store.income.set({
-      monthlyIncome: income,
-      monthlyExpenses: expenses,
-    });
+    this.saveError.set('');
+    this.saving.set(true);
 
-    this.store.incomeEntered.set(true);
+    try {
+      await this.store.saveIncome({
+        monthlyIncome: income,
+        monthlyExpenses: expenses,
+      });
 
-    void this.router.navigate(['/onboarding/complete']);
+      await this.router.navigate(['/onboarding/complete']);
+    } catch {
+      this.saveError.set(
+        'Could not save your income details. Please try again.'
+      );
+    } finally {
+      this.saving.set(false);
+    }
   }
 }

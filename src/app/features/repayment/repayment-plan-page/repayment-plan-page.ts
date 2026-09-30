@@ -15,6 +15,7 @@ import {
   RepaymentTimeline,
   RepaymentTimelineItem,
 } from '../repayment-timeline/repayment-timeline';
+import { LoadingState } from '../../../shared/loading-state/loading-state';
 
 @Component({
   selector: 'app-repayment-plan-page',
@@ -26,6 +27,7 @@ import {
     EmptyState,
     RepaymentPriorityList,
     RepaymentTimeline,
+    LoadingState
   ],
   templateUrl: './repayment-plan-page.html',
   styleUrl: './repayment-plan-page.css',

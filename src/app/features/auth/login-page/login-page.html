@@ -1,151 +1,36 @@
-<a class="skip-link" href="#login-form">Skip to sign in</a>
+<app-public-header [showAction]="false" />
 
-<div class="login-page">
-    <section class="story-panel" aria-label="About GooD4Life">
-        <div class="story-panel__glow" aria-hidden="true"></div>
+<main class="auth-page">
+    <section class="auth-card">
+        <span class="eyebrow">WELCOME BACK</span>
+        <h1>Sign in to GooD4Life</h1>
+        <p class="intro">Continue your journey towards a clearer financial picture.</p>
 
-        <a class="brand brand--light" routerLink="/" aria-label="GooD4Life home">
-            <span class="brand-mark" aria-hidden="true">✳</span>
-            <span class="brand-name">
-                GooD<span>4</span>Life
-                <small>by ThuthukaSA</small>
-            </span>
-        </a>
+        <form #loginForm="ngForm" (ngSubmit)="submit(loginForm)">
+            <label class="field">
+                <span>Email address</span>
+                <input name="email" type="email" [(ngModel)]="email" autocomplete="email" placeholder="name@example.com"
+                    email required [disabled]="submitting()" />
+            </label>
 
-        <div class="story-content">
-            <span class="story-eyebrow">
-                <span aria-hidden="true">✳</span>
-                YOUR JOURNEY FORWARD
-            </span>
+            <label class="field">
+                <span>Password</span>
+                <input name="password" type="password" [(ngModel)]="password" autocomplete="current-password"
+                    placeholder="Enter your password" required [disabled]="submitting()" />
+            </label>
 
-            <h1>
-                A clearer picture.<br />
-                <span>A stronger next step.</span>
-            </h1>
+            @if (error()) {
+            <p class="error" role="alert">{{ error() }}</p>
+            }
 
-            <p>
-                Bring your debts into one view, understand where you stand,
-                and take your next step with a plan you can follow.
-            </p>
+            <button class="submit-button" type="submit" [disabled]="loginForm.invalid || submitting()">
+                {{ submitting() ? 'Signing in…' : 'Sign in' }}
+            </button>
+        </form>
 
-            <div class="story-preview" aria-hidden="true">
-                <div class="story-preview__top">
-                    <span class="preview-icon">↗</span>
-                    <span>Your next step</span>
-                </div>
-                <strong>Progress begins with a plan.</strong>
-                <div class="preview-track"><span></span></div>
-                <div class="story-preview__bottom">
-                    <span>Understand</span>
-                    <span>Plan</span>
-                    <span>Move forward</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="story-footer">
-            <span>GooD4Life by ThuthukaSA</span>
-            <span>One step at a time.</span>
-        </div>
-    </section>
-
-    <main class="form-panel">
-        <div class="mobile-brand">
-            <a class="brand" routerLink="/" aria-label="GooD4Life home">
-                <span class="brand-mark" aria-hidden="true">✳</span>
-                <span class="brand-name">
-                    GooD<span>4</span>Life
-                    <small>by ThuthukaSA</small>
-                </span>
-            </a>
-        </div>
-
-        <div class="form-panel__top">
-            <a class="back-link" routerLink="/">
-                <span aria-hidden="true">←</span>
-                Back to home
-            </a>
-        </div>
-
-        <div class="form-container">
-            <div class="form-heading">
-                <span class="section-label">WELCOME BACK</span>
-                <h2>Sign in to continue.</h2>
-                <p>Pick up where you left off on your GooD4Life journey.</p>
-            </div>
-
-            <form id="login-form" class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-                <div class="field">
-                    <label for="email">Email address</label>
-                    <input id="email" type="email" formControlName="email" placeholder="you@example.com"
-                        autocomplete="email" [attr.aria-invalid]="
-              form.controls.email.invalid && form.controls.email.touched
-            " aria-describedby="email-error" />
-
-                    @if (form.controls.email.touched && form.controls.email.invalid) {
-                    <span id="email-error" class="field-error">
-                        @if (form.controls.email.hasError('required')) {
-                        Enter your email address.
-                        } @else {
-                        Enter a valid email address.
-                        }
-                    </span>
-                    }
-                </div>
-
-                <div class="field">
-                    <div class="field-heading">
-                        <label for="password">Password</label>
-                    </div>
-
-                    <div class="password-field">
-                        <input id="password" [type]="showPassword() ? 'text' : 'password'" formControlName="password"
-                            placeholder="Enter your password" autocomplete="current-password" [attr.aria-invalid]="
-                form.controls.password.invalid && form.controls.password.touched
-              " aria-describedby="password-error" />
-
-                        <button class="password-toggle" type="button" [attr.aria-label]="
-                showPassword() ? 'Hide password' : 'Show password'
-              " [attr.aria-pressed]="showPassword()" (click)="togglePassword()">
-                            {{ showPassword() ? 'Hide' : 'Show' }}
-                        </button>
-                    </div>
-
-                    @if (form.controls.password.touched && form.controls.password.invalid) {
-                    <span id="password-error" class="field-error">
-                        Enter your password.
-                    </span>
-                    }
-                </div>
-
-                @if (showAuthNotice()) {
-                <div class="notice" role="status">
-                    Account sign-in is being connected. You can explore the demo
-                    experience below.
-                </div>
-                }
-
-                <button class="submit-button" type="submit">
-                    Sign in
-                    <span aria-hidden="true">↗</span>
-                </button>
-            </form>
-
-            <div class="divider"><span>or</span></div>
-
-            <a class="demo-button" routerLink="/onboarding/welcome">
-                Explore the demo
-                <span aria-hidden="true">→</span>
-            </a>
-
-            <p class="register-prompt">
-                New to GooD4Life?
-                <a routerLink="/register">Create an account</a>
-            </p>
-        </div>
-
-        <p class="form-footer">
-            © 2026 ThuthukaSA · GooD4Life
+        <p class="switch-page">
+            New to GooD4Life?
+            <a routerLink="/register">Create an account</a>
         </p>
-    </main>
-</div>
+    </section>
+</main>

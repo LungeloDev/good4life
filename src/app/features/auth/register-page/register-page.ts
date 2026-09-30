@@ -1,67 +1,47 @@
 import { Component, inject, signal } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 
-function passwordsMatch(control: AbstractControl): ValidationErrors | null {
-  const password = control.get('password')?.value;
-  const confirmPassword = control.get('confirmPassword')?.value;
-
-  if (!password || !confirmPassword) {
-    return null;
-  }
-
-  return password === confirmPassword
-    ? null
-    : { passwordMismatch: true };
-}
+import { AuthService } from '../../../core/services/auth.service';
+import { PublicHeader } from '../../../layout/public-header/public-header';
 
 @Component({
   selector: 'app-register-page',
-  imports: [ReactiveFormsModule, RouterLink],
+  standalone: true,
+  imports: [FormsModule, RouterLink, PublicHeader],
   templateUrl: './register-page.html',
-  styleUrl: './register-page.css',
+  styleUrl: '../auth.css',
 })
 export class RegisterPage {
-  private readonly formBuilder = inject(FormBuilder);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
 
-  readonly showPassword = signal(false);
-  readonly showConfirmPassword = signal(false);
-  readonly showAuthNotice = signal(false);
+  readonly submitting = signal(false);
+  readonly error = signal('');
 
-  readonly form = this.formBuilder.nonNullable.group(
-    {
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required],
-    },
-    { validators: passwordsMatch },
-  );
+  email = '';
+  password = '';
+  confirmPassword = '';
 
-  togglePassword(): void {
-    this.showPassword.update(value => !value);
-  }
+  async submit(form: NgForm): Promise<void> {
+    if (form.invalid || this.submitting()) return;
 
-  toggleConfirmPassword(): void {
-    this.showConfirmPassword.update(value => !value);
-  }
+    this.error.set('');
 
-  onSubmit(): void {
-    this.form.markAllAsTouched();
-    this.showAuthNotice.set(false);
-
-    if (this.form.invalid) {
+    if (this.password !== this.confirmPassword) {
+      this.error.set('Your passwords do not match.');
       return;
     }
 
-    // Connect account creation here once your authentication service is ready.
-    this.showAuthNotice.set(true);
+    this.submitting.set(true);
+
+    try {
+      await this.auth.register(this.email, this.password);
+      await this.router.navigateByUrl('/onboarding/welcome');
+    } catch (error) {
+      this.error.set(this.auth.errorMessage(error));
+    } finally {
+      this.submitting.set(false);
+    }
   }
 }

@@ -16,8 +16,9 @@
                 <label class="field field--wide">
                     <span>Full name</span>
 
-                    <input #fullName="ngModel" name="fullName" type="text" [(ngModel)]="draft.fullName"
-                        placeholder="Your full name" autocomplete="name" maxlength="120" pattern=".*\S.*" required />
+                    <input #fullName="ngModel" [disabled]="saving()" name="fullName" type="text"
+                        [(ngModel)]="draft.fullName" placeholder="Your full name" autocomplete="name" maxlength="120"
+                        pattern=".*\S.*" required />
 
                     @if (fullName.invalid && fullName.touched) {
                     <span class="field-error">Enter your full name.</span>
@@ -27,7 +28,7 @@
                 <label class="field field--wide">
                     <span>Email address</span>
 
-                    <input #email="ngModel" name="email" type="email" [(ngModel)]="draft.email"
+                    <input #email="ngModel" [disabled]="saving()" name="email" type="email" [(ngModel)]="draft.email"
                         placeholder="name@example.com" autocomplete="email" email required />
 
                     @if (email.invalid && email.touched) {
@@ -39,16 +40,22 @@
                     <span>Phone number — optional</span>
 
                     <input name="phone" type="tel" [(ngModel)]="draft.phone" placeholder="For example, 082 123 4567"
-                        autocomplete="tel" maxlength="30" />
+                        [disabled]="saving()" autocomplete="tel" maxlength="30" />
                 </label>
             </div>
+            @if (saveError()) {
+            <p class="field-error" role="alert">{{ saveError() }}</p>
+            }
 
+            @if (saving()) {
+            <p class="form-note" role="status">Saving your details…</p>
+            }
             <div class="actions">
                 <a class="button button--secondary" routerLink="/onboarding/consent">
                     Back
                 </a>
 
-                <button class="button button--primary" type="submit" [disabled]="profileForm.invalid">
+                <button class="button button--primary" type="submit" [disabled]="profileForm.invalid || saving()">
                     Continue
                     <span aria-hidden="true">→</span>
                 </button>

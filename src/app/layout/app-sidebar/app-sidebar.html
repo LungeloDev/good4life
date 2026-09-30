@@ -23,7 +23,13 @@
         <h2>One step at a time.</h2>
         <p>Bring your debts into focus and work towards your next milestone.</p>
     </div>
+    <button class="logout-button" type="button" [disabled]="signingOut()" (click)="logout()">
+        {{ signingOut() ? 'Signing out…' : 'Sign out' }}
+    </button>
 
+    @if (logoutError()) {
+    <p class="logout-error" role="alert">{{ logoutError() }}</p>
+    }
     <footer>
         <span class="footer-dot" aria-hidden="true"></span>
         Your journey starts with clarity

@@ -9,13 +9,31 @@
 
 .mobile-nav {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 6px;
     padding: 10px 14px;
     padding-bottom: calc(10px + env(safe-area-inset-bottom));
     border-top: 1px solid #ece5dd;
     background: white;
     box-shadow: 0 -5px 25px rgba(70, 45, 25, 0.04);
+}
+
+.logout-button {
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #95877b;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.logout-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #bd4942;
+  font-size: 11px;
 }
 
 a {
